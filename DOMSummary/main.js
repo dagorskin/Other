@@ -33,3 +33,37 @@ ol.children[0].replaceWith(list[4]) // Замена первого дочерн�
 ol.reversed = true // Добавление атрибута 'reversed' списку. Атрибут нужен для обратного отчета пунктов списка.
 ol.start = '5' // Добавление атрибута 'start' списку. Атрибут заставляет список начинаться с 5 пункта.
 ol.removeAttribute('start') // Удаление атрибута 'start' из списка 'ol'.
+
+// События.
+// Находим нужные элементы DOM
+const countDisplay = document.querySelector('.count-display')
+const incrementButton = document.querySelector('.increment-button')
+
+// Получение контента (числа) из счетчика, увеличение этого числа на еденицу и добавление обратно в контент счетчика.
+function incrementCount () {
+  let currentCount = parseInt(countDisplay.textContent)
+  countDisplay.textContent = ++currentCount
+}
+
+// Добавление события, при котором после клика по кнопке срабатывает функция 'incrementCount'.
+incrementButton.addEventListener('click', incrementCount)
+
+// Код ниже оборачивается в событие которое загружается после загрузки DOM дерева. Лучше всегда писать.
+document.addEventListener('DOMContentLoaded', function () {
+  const colorInput = document.querySelector('.color-input')
+  const colorBlock = document.querySelector('.color-block')
+  const clearButton = document.querySelector('.clear-color-button')
+
+  function paintBlock () { // Красим фон блока цветом, который содержится в input.
+    colorBlock.style.backgroundColor = colorInput.value
+  }
+
+  colorInput.addEventListener('input', paintBlock) // Создание события на input, при котором при вводе срабатывает функция покраски блока.
+
+  paintBlock() // Вызываем функцию покраски что бы блок покрасился в значение по умолчаниу (в красный).
+
+  clearButton.addEventListener('click', function () { // Событие, которое очишает свойство цвета фона блока и значение в input.
+    colorBlock.style.removeProperty('background-color')
+    colorInput.value = ''
+  })
+})
